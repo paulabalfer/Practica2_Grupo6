@@ -1,0 +1,25 @@
+hora,nivel_congestion,coches,motos,camiones,buses,vehiculo_predominante
+0,Baja,2791,236,693,85,coches
+1,Baja,1833,155,455,54,coches
+2,Baja,1152,96,286,32,coches
+3,Baja,807,69,199,21,coches
+4,Baja,940,80,233,26,coches
+5,Baja,1520,127,375,46,coches
+6,Baja,4240,353,1043,126,coches
+7,Moderada,13086,1092,3223,388,coches
+8,Muy Alta,19047,1593,4709,565,coches
+9,Muy Alta,16860,1409,4161,504,coches
+10,Moderada,11743,981,2899,350,coches
+11,Moderada,9687,810,2392,287,coches
+12,Moderada,10735,898,2651,319,coches
+13,Moderada,12824,1071,3164,384,coches
+14,Moderada,14662,1226,3622,437,coches
+15,Moderada,11425,953,2822,342,coches
+16,Moderada,10233,854,2525,302,coches
+17,Moderada,13878,1159,3424,414,coches
+18,Muy Alta,18059,1509,4461,538,coches
+19,Moderada,16331,1365,4030,487,coches
+20,Moderada,12423,1038,3063,367,coches
+21,Moderada,9136,761,2250,273,coches
+22,Alta,6811,569,1677,200,coches
+23,Baja,4154,347,1025,121,coches
