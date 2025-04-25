@@ -1,0 +1,175 @@
+version: "3.8"
+services:
+  python-executor:
+    image: python:3.9-slim
+    container_name: py-executor
+    volumes:
+      - ./etl:/app/etl  # Montar específicamente la carpeta ETL
+      - ./:/app/trabajo  # Montar todo el proyecto para acceso manual
+    working_dir: /app/etl  # Directorio de trabajo para la ejecución automática
+    command: 
+      - bash
+      - -c
+      - |
+        # Instalar dependencias
+        pip install pandas numpy && \
+        
+        # Ejecutar scripts ETL ordenados
+        echo "=== EJECUCIÓN ORDENADA DE ETL ===" && \
+        
+        # 1. Primero scripts con 'processed' en el nombre
+        processed_scripts=$(ls | grep -i processed.*\.py | sort) && \
+        echo "▄▀▄▀ PROCESADOS PRIMERO ▄▀▄▀" && \
+        for script in $processed_scripts; do
+          [ -f "$script" ] && {
+            echo "▶ Ejecutando: $script"
+            python3 "$script" || echo "¡Error en $script!"
+          }
+        done && \
+        
+        # 2. Luego el resto de scripts, ordenados alfabéticamente
+        other_scripts=$(ls | grep -i .*\.py | grep -vi processed | sort) && \
+        echo "▄▀▄▀ OTROS SCRIPTS ▄▀▄▀" && \
+        for script in $other_scripts; do
+          [ -f "$script" ] && {
+            echo "▶ Ejecutando: $script"
+            python3 "$script" || echo "¡Error en $script!"
+          }
+        done && \
+        
+        # Mantener contenedor activo
+        echo "✅ ETL completado. Contenedor activo para ejecuciones manuales." && \
+        tail -f /dev/null
+
+
+# version: "3.8"
+# services:
+#   python-executor:
+#     image: python:3.9-slim
+#     container_name: py-executor
+#     volumes:
+#       - ./:/app/trabajo  # Montar todo el espacio de trabajo
+#     working_dir: /app/scripts
+#     command: 
+#       - bash
+#       - -c
+#       - |
+#         # Instalar dependencias
+#         pip install pandas numpy && \
+        
+#         # Ordenar scripts: primero los que contienen 'processed'
+#         echo "=== EJECUTANDO SCRIPTS ORDENADOS ===" && \
+#         processed_scripts=$(ls | grep -i processed.*\.py) && \
+#         other_scripts=$(ls | grep -i .*\.py | grep -vi processed) && \
+        
+#         # Ejecutar procesados primero
+#         echo "▄▀▄▀ SCRIPTS PROCESADOS ▄▀▄▀" && \
+#         for script in $processed_scripts; do
+#           echo "▶ Ejecutando $script..." && \
+#           python3 "$script" || echo "Error en $script"
+#         done && \
+        
+#         # Luego los demás
+#         echo "▄▀▄▀ OTROS SCRIPTS ▄▀▄▀" && \
+#         for script in $other_scripts; do
+#           echo "▶ Ejecutando $script..." && \
+#           python3 "$script" || echo "Error en $script"
+#         done && \
+        
+#         # Mantener contenedor activo
+#         tail -f /dev/null
+
+
+# version: "3.8"
+
+# services:
+#   db:
+#     image: postgres:15
+#     container_name: madrid_sql
+#     restart: always
+#     environment:
+#       POSTGRES_DB: madrid_sostenible
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: postgres
+#     ports:
+#       - "5432:5432"
+#     # Solo monta los dumps SQL
+#     volumes:
+#       - ./data/raw:/docker-entrypoint-initdb.d:ro  # De la carpeta raw 
+#       - pgdata:/var/lib/postgresql/data
+
+#   jupyter:
+#     image: jupyter/base-notebook:latest
+#     container_name: madrid_jupyter
+#     environment:
+#       - JUPYTER_ENABLE_LAB=yes
+#     ports:
+#       - "8888:8888"
+#     # Monta los CSV y JSON para análisis programático
+#     volumes:
+#       - ./data/raw:/home/jovyan/data/raw:ro
+#       - ./data/processed:/home/jovyan/data/processed
+#       - ./notebooks:/home/jovyan/work
+#     depends_on:
+#       - db
+
+#   dashboard:
+#     image: streamlit/streamlit:latest
+#     container_name: madrid_dashboard
+#     working_dir: /app
+#     # Monta solo los datos procesados para visualización
+#     volumes:
+#       - ./data/processed:/app/data:ro
+#       - ./dashboard:/app
+#     ports:
+#       - "8501:8501"
+#     depends_on:
+#       - db
+
+# volumes:
+#   pgdata:
+
+
+# version: "3.8"
+
+# services:
+#   db:
+#     image: postgres:15
+#     container_name: madrid_sql
+#     restart: always
+#     environment:
+#       POSTGRES_DB: madrid_sostenible
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: postgres
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - ./data/raw:/docker-entrypoint-initdb.d   # Cargar dumps SQL iniciales
+#       - pgdata:/var/lib/postgresql/data
+
+#   jupyter:
+#     image: jupyter/base-notebook:latest
+#     container_name: madrid_jupyter
+#     environment:
+#       - JUPYTER_ENABLE_LAB=yes
+#       - JUPYTER_TOKEN= # Sin token para acceso sencillo en local
+#     ports:
+#       - "8888:8888"
+#     volumes:
+#       - ./notebooks:/home/jovyan/work
+#     depends_on:
+#       - db
+
+#   dashboard:
+#     image: streamlit/streamlit:latest
+#     container_name: madrid_dashboard
+#     working_dir: /app
+#     volumes:
+#       - ./dashboard:/app
+#     ports:
+#       - "8501:8501"
+#     depends_on:
+#       - db
+
+# volumes:
+#   pgdata:
