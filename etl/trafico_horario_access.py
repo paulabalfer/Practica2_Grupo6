@@ -1,17 +1,44 @@
 import pandas as pd
+import os
+import boto3
+from botocore.exceptions import ClientError
 
-# Lectura de datos de la carpeta procesada
-df = pd.read_csv('../data/processed/trafico_horario_processed.csv')
+# Leer archivo preprocesado
+df = pd.read_parquet('data/preprocessed/trafico_horario_preprocessed.parquet')
 
-# Vistazo a la congestión del tráfico por hora
-congestion_hora = df.groupby('hora')['nivel_congestion'].agg(lambda x: x.mode()[0])
+# Obtener nivel de congestión más frecuente por hora
+congestion_hora = df.groupby('hora')['nivel_congestion'].agg(lambda x: x.mode()[0]).reset_index()
 
-# Vistazo a los tipos de coche por hora
-tipos_por_hora = df.groupby('hora')[['coches', 'motos', 'camiones', 'buses']].sum()
+# Sumar tipos de vehículos por hora
+tipos_por_hora = df.groupby('hora')[['coches', 'motos', 'camiones', 'buses']].sum().reset_index()
+
+# Determinar el vehículo predominante por hora
 tipos_por_hora['vehiculo_predominante'] = tipos_por_hora[['coches', 'motos', 'camiones', 'buses']].idxmax(axis=1)
 
-# Unión de ambos vistazos por hora
+# Unir ambos resultados
 df_unido = pd.merge(congestion_hora, tipos_por_hora, on='hora')
 
-# Guardar datos en la carpeta de acceso
-df_unido.to_csv('../data/access/trafico_horario_access.csv', index=True)
+# Guardar capa de acceso como archivo Parquet
+os.makedirs('data/access', exist_ok=True)
+access_path = 'data/access/trafico_horario_access.parquet'
+df_unido.to_parquet(access_path, index=False)
+
+# Subir a MinIO
+minio = boto3.client(
+    's3',
+    endpoint_url=os.environ.get("MINIO_ENDPOINT", "http://localhost:9000"),
+    aws_access_key_id=os.environ.get("MINIO_ACCESS_KEY", "minioadmin"),
+    aws_secret_access_key=os.environ.get("MINIO_SECRET_KEY", "minioadmin")
+)
+
+bucket = 'trafico-access'
+
+# Crear bucket si no existe
+try:
+    minio.head_bucket(Bucket=bucket)
+except ClientError:
+    minio.create_bucket(Bucket=bucket)
+
+# Subir archivo final a MinIO
+with open(access_path, 'rb') as f:
+    minio.upload_fileobj(f, bucket, 'trafico_horario_access.parquet')
