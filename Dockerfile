@@ -21,6 +21,6 @@ COPY etl/ ./etl
 RUN pip install pandas boto3
 
 # Ejecutamos todos los scripts ETL en orden
-CMD   python etl/trafico_horario_preprocessed.py && \
+CMD   python etl/trafico_horario_processed.py && \
     python etl/trafico_horario_access.py && \
     python etl/raw_bucket.py
