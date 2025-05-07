@@ -1,16 +1,16 @@
-,aparcamiento_id,variacion_diaria,variacion_semanal,nombre_x
-0,1,73.1,73.1,Aparcamiento Plaza Mayor
-1,2,73.0,73.0,Aparcamiento Centro
-2,3,73.1,73.1,Aparcamiento Las Cortes
-3,4,72.0,72.0,Aparcamiento Recoletos
-4,5,76.0,76.0,Aparcamiento Chueca
-5,6,72.9,72.9,Aparcamiento Santa Ana
-6,7,74.19999999999999,74.19999999999999,Aparcamiento Sevilla
-7,8,75.1,75.1,Aparcamiento Alonso Martínez
-8,9,76.10000000000001,76.10000000000001,Aparcamiento Marqués de Salamanca
-9,10,73.0,73.0,Aparcamiento Retiro
-10,11,74.80000000000001,74.80000000000001,Aparcamiento Bernabéu
-11,12,73.0,73.0,Aparcamiento Chamberí
-12,13,74.19999999999999,74.19999999999999,Aparcamiento Olavide
-13,14,74.19999999999999,74.19999999999999,Aparcamiento Castellana
-14,15,76.19999999999999,76.19999999999999,Aparcamiento Tribunal
+,aparcamiento_id,variacion_diaria,variacion_semanal,nombre_x,latitud_x,longitud_x
+0,1,73.1,73.1,Aparcamiento Plaza Mayor,40.4155,-3.7074
+1,2,73.0,73.0,Aparcamiento Centro,40.4162,-3.7069
+2,3,73.1,73.1,Aparcamiento Las Cortes,40.4147,-3.6999
+3,4,72.0,72.0,Aparcamiento Recoletos,40.4217,-3.6909
+4,5,76.0,76.0,Aparcamiento Chueca,40.4235,-3.6984
+5,6,72.9,72.9,Aparcamiento Santa Ana,40.4144,-3.7012
+6,7,74.19999999999999,74.19999999999999,Aparcamiento Sevilla,40.418,-3.6987
+7,8,75.1,75.1,Aparcamiento Alonso Martínez,40.4294,-3.696
+8,9,76.10000000000001,76.10000000000001,Aparcamiento Marqués de Salamanca,40.4294,-3.6839
+9,10,73.0,73.0,Aparcamiento Retiro,40.4143,-3.6865
+10,11,74.80000000000001,74.80000000000001,Aparcamiento Bernabéu,40.4532,-3.6883
+11,12,73.0,73.0,Aparcamiento Chamberí,40.4354,-3.7031
+12,13,74.19999999999999,74.19999999999999,Aparcamiento Olavide,40.4319,-3.7052
+13,14,74.19999999999999,74.19999999999999,Aparcamiento Castellana,40.4326,-3.6904
+14,15,76.19999999999999,76.19999999999999,Aparcamiento Tribunal,40.4262,-3.7009

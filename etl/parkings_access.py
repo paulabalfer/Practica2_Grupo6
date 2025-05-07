@@ -57,7 +57,7 @@ try:
     # Transformaciones
     prepared = calcular_variaciones_ocupacion(rotacion, ubicacion)
     # Filtro de columnas
-    cols = ['aparcamiento_id', 'variacion_diaria', 'variacion_semanal', 'nombre_x']
+    cols = ['aparcamiento_id', 'variacion_diaria', 'variacion_semanal', 'nombre_x', 'latitud_x', 'longitud_x']
     prepared = prepared[cols]
 
     # Guardar datos 
