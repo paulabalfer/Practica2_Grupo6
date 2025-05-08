@@ -1,0 +1,41 @@
+estacion_id,estacion_nombre,linea_id,distrito_id,latitud,longitud
+1,Sol,1,1,40.4168,-3.7038
+2,Gran Vía,1,1,40.42,-3.7016
+3,Tribunal,1,1,40.4262,-3.7009
+4,Bilbao,1,1,40.4292,-3.7021
+5,Iglesia,1,7,40.4328,-3.701
+6,Ríos Rosas,1,7,40.4388,-3.7004
+7,Cuatro Caminos,1,6,40.4468,-3.704
+8,Tetuán,1,6,40.459,-3.699
+9,Valdeacederas,1,6,40.4645,-3.6979
+10,Plaza de Castilla,1,5,40.4655,-3.6887
+11,Moncloa,6,9,40.4352,-3.7173
+12,Argüelles,6,9,40.4293,-3.7147
+13,Príncipe Pío,6,9,40.4208,-3.7201
+14,Puerta del Ángel,6,10,40.4111,-3.7302
+15,Alto de Extremadura,6,10,40.408,-3.7389
+16,Lucero,6,10,40.4031,-3.7456
+17,Laguna,6,10,40.3956,-3.7485
+18,Carpetana,6,10,40.3915,-3.7425
+19,Oporto,6,11,40.3848,-3.7345
+20,Plaza Elíptica,6,12,40.385,-3.7187
+21,Embajadores - Ferrocarril,112,1,40.4066,-3.7008
+22,Embajadores - Ronda de Toledo,112,1,40.4053,-3.7063
+23,Ronda de Segovia - Puerta de Toledo,112,1,40.4113,-3.7122
+24,Gran Vía de San Francisco - Bailén,112,1,40.4116,-3.7143
+25,Plaza de España,112,1,40.4236,-3.7124
+26,Gran Vía - Callao,112,1,40.4197,-3.7058
+27,Gran Vía - Red de San Luis,112,1,40.4195,-3.7012
+28,Alcalá - Sevilla,112,1,40.4188,-3.6975
+29,Puerta del Sol,112,1,40.4168,-3.7038
+30,Carretas,112,1,40.4156,-3.7031
+31,Atocha,204,3,40.4061,-3.6898
+32,Recoletos,204,4,40.4242,-3.6915
+33,Nuevos Ministerios,204,5,40.447,-3.6918
+34,Chamartín,204,5,40.4726,-3.6827
+35,Sol,204,1,40.4169,-3.7038
+36,Méndez Álvaro,204,2,40.3982,-3.6824
+37,Asamblea de Madrid-Entrevías,204,13,40.3778,-3.6593
+38,El Pozo,204,13,40.3723,-3.6563
+39,Vallecas,204,18,40.3629,-3.6318
+40,Santa Eugenia,204,18,40.3776,-3.6184

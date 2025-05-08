@@ -1,0 +1,41 @@
+id,nombre,linea_id,tipo,distrito_id,latitud,longitud,accesibilidad,correspondencia,año_inauguracion
+1,Sol,1,Estación,1,40.4168,-3.7038,Total,True,1919
+2,Gran Vía,1,Estación,1,40.42,-3.7016,Total,True,1919
+3,Tribunal,1,Estación,1,40.4262,-3.7009,Parcial,True,1919
+4,Bilbao,1,Estación,1,40.4292,-3.7021,Parcial,True,1919
+5,Iglesia,1,Estación,7,40.4328,-3.701,Parcial,False,1929
+6,Ríos Rosas,1,Estación,7,40.4388,-3.7004,Parcial,False,1929
+7,Cuatro Caminos,1,Estación,6,40.4468,-3.704,Total,True,1929
+8,Tetuán,1,Estación,6,40.459,-3.699,Parcial,False,1929
+9,Valdeacederas,1,Estación,6,40.4645,-3.6979,Parcial,False,1929
+10,Plaza de Castilla,1,Estación,5,40.4655,-3.6887,Total,True,1961
+11,Moncloa,6,Estación,9,40.4352,-3.7173,Total,True,1995
+12,Argüelles,6,Estación,9,40.4293,-3.7147,Total,True,1995
+13,Príncipe Pío,6,Estación,9,40.4208,-3.7201,Total,True,1995
+14,Puerta del Ángel,6,Estación,10,40.4111,-3.7302,Parcial,False,1995
+15,Alto de Extremadura,6,Estación,10,40.408,-3.7389,Parcial,False,1995
+16,Lucero,6,Estación,10,40.4031,-3.7456,Parcial,False,1995
+17,Laguna,6,Estación,10,40.3956,-3.7485,Parcial,False,1995
+18,Carpetana,6,Estación,10,40.3915,-3.7425,Parcial,False,1995
+19,Oporto,6,Estación,11,40.3848,-3.7345,Total,True,1995
+20,Plaza Elíptica,6,Estación,12,40.385,-3.7187,Total,True,1995
+21,Embajadores - Ferrocarril,112,Parada,1,40.4066,-3.7008,Parcial,False,1986
+22,Embajadores - Ronda de Toledo,112,Parada,1,40.4053,-3.7063,Parcial,False,1986
+23,Ronda de Segovia - Puerta de Toledo,112,Parada,1,40.4113,-3.7122,Parcial,False,1986
+24,Gran Vía de San Francisco - Bailén,112,Parada,1,40.4116,-3.7143,Parcial,False,1986
+25,Plaza de España,112,Parada,1,40.4236,-3.7124,Total,True,1986
+26,Gran Vía - Callao,112,Parada,1,40.4197,-3.7058,Total,True,1986
+27,Gran Vía - Red de San Luis,112,Parada,1,40.4195,-3.7012,Total,True,1986
+28,Alcalá - Sevilla,112,Parada,1,40.4188,-3.6975,Total,True,1986
+29,Puerta del Sol,112,Parada,1,40.4168,-3.7038,Total,True,1986
+30,Carretas,112,Parada,1,40.4156,-3.7031,Total,False,1986
+31,Atocha,204,Estación,3,40.4061,-3.6898,Total,True,1977
+32,Recoletos,204,Estación,4,40.4242,-3.6915,Parcial,True,1977
+33,Nuevos Ministerios,204,Estación,5,40.447,-3.6918,Total,True,1977
+34,Chamartín,204,Estación,5,40.4726,-3.6827,Total,True,1977
+35,Sol,204,Estación,1,40.4169,-3.7038,Total,True,2009
+36,Méndez Álvaro,204,Estación,2,40.3982,-3.6824,Total,True,1977
+37,Asamblea de Madrid-Entrevías,204,Estación,13,40.3778,-3.6593,Parcial,False,1977
+38,El Pozo,204,Estación,13,40.3723,-3.6563,Parcial,False,1977
+39,Vallecas,204,Estación,18,40.3629,-3.6318,Parcial,False,1977
+40,Santa Eugenia,204,Estación,18,40.3776,-3.6184,Parcial,False,1977

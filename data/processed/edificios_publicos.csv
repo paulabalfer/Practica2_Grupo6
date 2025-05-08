@@ -1,0 +1,127 @@
+id,nombre,tipo,distrito_id,direccion,latitud,longitud,superficie_m2,año_construccion,ultimo_renovado,accesibilidad,certificacion_energetica
+1,Oficina Municipal Centro 1,Administrativo,1,Calle Mayor 72,40.4156,-3.7121,3500,1985,2015,Alta,C
+2,CEIP Vázquez García,Educativo,1,Calle Bailén 18,40.4189,-3.7136,4200,1962,2010,Media,D
+3,Centro de Salud Centro Norte,Sanitario,1,Calle Fuencarral 56,40.4234,-3.7028,2800,1992,2018,Alta,B
+4,Centro Cultural Conde Duque,Cultural,1,Calle Conde Duque 11,40.428,-3.7112,7500,1730,2011,Media,D
+5,Polideportivo Centro I,Deportivo,1,Calle Sebastián Elcano 4,40.4102,-3.7052,6200,1988,2017,Alta,C
+6,Centro Social Centro Sur,Social,1,Plaza Tirso de Molina 8,40.4122,-3.7037,1800,1975,2014,Media,D
+7,Oficina Municipal Arganzuela 1,Administrativo,2,Paseo de la Chopera 10,40.4023,-3.6981,2800,1990,2016,Alta,C
+8,CEIP Menéndez Rodríguez,Educativo,2,Calle Ferrocarril 35,40.4007,-3.6896,5100,1970,2012,Alta,C
+9,Centro de Salud Arganzuela Este,Sanitario,2,Calle Embajadores 120,40.4008,-3.7017,2500,1998,2018,Alta,B
+10,Biblioteca Pública Arganzuela,Cultural,2,Calle Arganda 12,40.3978,-3.6885,3200,2001,2018,Alta,B
+11,Oficina Municipal Retiro 1,Administrativo,3,Avenida Ciudad de Barcelona 162,40.4065,-3.6722,2600,1988,2016,Alta,C
+12,CEIP Calderón Martínez,Educativo,3,Calle Ibiza 56,40.4158,-3.6715,4800,1965,2013,Media,D
+13,Centro de Salud Retiro Norte,Sanitario,3,Calle Narváez 45,40.4186,-3.6768,2300,1995,2019,Alta,B
+14,Centro Cultural Luis Peidró,Cultural,3,Calle Doctor Esquerdo 35,40.4135,-3.6712,3800,1978,2014,Media,C
+15,Oficina Municipal Salamanca 1,Administrativo,4,Calle Velázquez 95,40.4293,-3.6812,3200,1980,2015,Alta,C
+16,CEIP Ortega Domínguez,Educativo,4,Calle Príncipe de Vergara 126,40.4326,-3.6776,5400,1962,2011,Media,D
+17,Centro de Salud Salamanca Este,Sanitario,4,Calle Núñez de Balboa 68,40.4295,-3.6836,2500,1993,2018,Alta,B
+18,Biblioteca Pública Salamanca,Cultural,4,Calle Goya 89,40.4255,-3.6774,3400,1985,2016,Alta,C
+19,Oficina Municipal Chamartín 1,Administrativo,5,Calle Príncipe de Vergara 142,40.4407,-3.6747,3100,1982,2016,Alta,C
+20,CEIP Jiménez Sánchez,Educativo,5,Calle Serrano 210,40.4445,-3.6817,4900,1968,2014,Media,D
+21,Centro de Salud Chamartín Sur,Sanitario,5,Calle López de Hoyos 135,40.4461,-3.6723,2600,1996,2019,Alta,B
+22,Centro Cultural Nicolás Salmerón,Cultural,5,Calle Mantuano 51,40.4478,-3.6742,3600,1976,2015,Media,C
+23,Oficina Municipal Tetuán 1,Administrativo,6,Calle Bravo Murillo 357,40.4656,-3.7007,2700,1984,2016,Media,C
+24,CEIP López Torres,Educativo,6,Calle Francos Rodríguez 67,40.4613,-3.7058,4600,1972,2013,Media,D
+25,Centro de Salud Tetuán Este,Sanitario,6,Calle Infanta Mercedes 45,40.4556,-3.6992,2400,1997,2018,Alta,B
+26,Biblioteca Pública Tetuán,Cultural,6,Calle Capitán Haya 38,40.4587,-3.6934,3100,1988,2017,Alta,C
+27,Oficina Municipal Chamberí 1,Administrativo,7,Calle Fuencarral 135,40.4326,-3.7015,2900,1981,2015,Alta,C
+28,CEIP Núñez Rivera,Educativo,7,Calle Santa Engracia 142,40.4382,-3.7032,4700,1965,2012,Media,D
+29,Centro de Salud Chamberí Norte,Sanitario,7,Calle Espronceda 38,40.4373,-3.7064,2500,1994,2018,Alta,B
+30,Centro Cultural Galileo,Cultural,7,Calle Galileo 39,40.4349,-3.7082,3700,1974,2014,Media,C
+31,Oficina Municipal Fuencarral 1,Administrativo,8,Avenida Cardenal Herrera Oria 378,40.4967,-3.7163,3300,1989,2017,Alta,C
+32,CEIP Herrera Castro,Educativo,8,Calle Isla de Arosa 12,40.4922,-3.7058,5200,1978,2015,Alta,C
+33,Centro de Salud Fuencarral,Sanitario,8,Calle Ventisquero de la Condesa 27,40.4837,-3.7125,2700,1998,2019,Alta,B
+34,Centro Cultural Vaguada,Cultural,8,Avenida Monforte de Lemos 36,40.4802,-3.7127,4100,1985,2016,Alta,B
+35,Oficina Municipal Moncloa 1,Administrativo,9,Avenida Arco de la Victoria 4,40.4353,-3.7212,3000,1983,2015,Alta,C
+36,CEIP Ramiro de Maeztu,Educativo,9,Calle Serrano 127,40.4408,-3.6862,5500,1960,2012,Media,D
+37,Centro de Salud Moncloa,Sanitario,9,Calle Isaac Peral 18,40.4339,-3.7158,2400,1996,2018,Alta,B
+38,Centro Cultural Moncloa,Cultural,9,Plaza Moncloa 1,40.435,-3.7174,3900,1982,2015,Media,C
+39,Oficina Municipal Latina 1,Administrativo,10,Avenida General Fanjul 2,40.3856,-3.7585,2800,1985,2016,Media,C
+40,CEIP García Lorca,Educativo,10,Calle Aldeanueva de la Vera 11,40.3896,-3.7495,4800,1975,2014,Media,D
+41,Centro de Salud Latina,Sanitario,10,Calle Camarena 218,40.3842,-3.7653,2500,1997,2019,Alta,B
+42,Centro Cultural Fernando de los Ríos,Cultural,10,Calle Camarena 10,40.3837,-3.7582,3600,1980,2015,Media,C
+43,Oficina Municipal Carabanchel 1,Administrativo,11,Calle Oporto 78,40.3828,-3.7332,2900,1986,2017,Media,C
+44,CEIP Pérez Galdós,Educativo,11,Calle Eugenia de Montijo 61,40.3815,-3.7397,5000,1972,2013,Media,D
+45,Centro de Salud Carabanchel,Sanitario,11,Calle General Ricardos 144,40.3858,-3.7272,2700,1999,2019,Alta,B
+46,Centro Cultural San Francisco,Cultural,11,Calle Monseñor Óscar Romero 42,40.3791,-3.7366,3700,1983,2016,Media,C
+47,Oficina Municipal Usera 1,Administrativo,12,Avenida Rafaela Ybarra 41,40.3833,-3.7065,2700,1987,2017,Media,C
+48,CEIP Marcelo Usera,Educativo,12,Calle Perales de Tajuña 1,40.3797,-3.7052,4700,1974,2014,Media,D
+49,Centro de Salud Usera,Sanitario,12,Calle Marcelo Usera 160,40.3846,-3.7018,2500,1998,2019,Alta,B
+50,Centro Cultural Orcasur,Cultural,12,Plaza Asociación 1,40.3764,-3.6986,3500,1984,2016,Media,C
+51,Oficina Municipal Puente de Vallecas 1,Administrativo,13,Avenida Albufera 42,40.3953,-3.6695,3000,1988,2018,Media,C
+52,CEIP Martínez Montañés,Educativo,13,Calle Puerto del Monasterio 38,40.3832,-3.6653,4900,1973,2014,Media,D
+53,Centro de Salud Vallecas,Sanitario,13,Calle Sierra Nevada 10,40.3872,-3.6659,2600,1997,2018,Alta,B
+54,Centro Cultural Pozo del Tío Raimundo,Cultural,13,Avenida de las Glorietas 19,40.3882,-3.6557,3600,1985,2016,Media,C
+55,Oficina Municipal Moratalaz 1,Administrativo,14,Calle Fuente Carrantona 8,40.4073,-3.6437,2800,1984,2016,Alta,C
+56,CEIP Francisco de Luis,Educativo,14,Calle Corregidor Diego de Valderrábano 35,40.4067,-3.6526,4700,1975,2015,Media,D
+57,Centro de Salud Moratalaz,Sanitario,14,Calle Hacienda de Pavones 271,40.4037,-3.6383,2400,1996,2018,Alta,B
+58,Centro Cultural Eduardo Chillida,Cultural,14,Calle Arroyo Belincoso 9,40.4076,-3.6457,3500,1982,2015,Media,C
+59,Oficina Municipal Ciudad Lineal 1,Administrativo,15,Calle Hermanos García Noblejas 16,40.4319,-3.6456,3100,1986,2017,Alta,C
+60,CEIP San Juan Bautista,Educativo,15,Calle Torrelaguna 74,40.4442,-3.6562,5000,1970,2012,Media,D
+61,Centro de Salud Ciudad Lineal,Sanitario,15,Calle José del Hierro 45,40.4359,-3.6467,2500,1995,2018,Alta,B
+62,Centro Cultural La Elipa,Cultural,15,Calle Santa Felicidad 39,40.4232,-3.6499,3600,1983,2015,Media,C
+63,Oficina Municipal Hortaleza 1,Administrativo,16,Carretera Canillas 2,40.47,-3.6542,2900,1989,2018,Alta,C
+64,CEIP Pinar del Rey,Educativo,16,Calle Fontarabia 83,40.4778,-3.6456,5100,1978,2015,Alta,C
+65,Centro de Salud Hortaleza,Sanitario,16,Calle Añastro 27,40.4645,-3.6361,2600,1998,2019,Alta,B
+66,Centro Cultural Carril del Conde,Cultural,16,Calle Carril del Conde 57,40.4691,-3.6405,3700,1986,2017,Alta,C
+67,Oficina Municipal Villaverde 1,Administrativo,17,Calle Arroyo Bueno 53,40.3455,-3.7089,2700,1987,2017,Media,C
+68,CEIP Antonio de Nebrija,Educativo,17,Calle Juan José Martínez Seco 52,40.3483,-3.6953,4800,1974,2014,Media,D
+69,Centro de Salud Villaverde,Sanitario,17,Calle Totanes 1,40.3446,-3.7053,2500,1997,2019,Alta,B
+70,Centro Cultural Santa Petronila,Cultural,17,Calle María Martínez Oviol 12,40.3432,-3.7012,3500,1984,2016,Media,C
+71,Oficina Municipal Villa de Vallecas 1,Administrativo,18,Paseo Federico García Lorca 12,40.3728,-3.6116,2800,1990,2018,Alta,C
+72,CEIP Juan Gris,Educativo,18,Calle Muela de San Juan 31,40.3748,-3.6033,5000,1985,2016,Alta,C
+73,Centro de Salud Villa de Vallecas,Sanitario,18,Calle Sierra Gador 68,40.3736,-3.6081,2600,1999,2019,Alta,B
+74,Centro Cultural Zazuar,Cultural,18,Calle Zazuar 4,40.3741,-3.6067,3600,1988,2017,Alta,C
+75,Oficina Municipal Vicálvaro 1,Administrativo,19,Calle Condesa Vega del Pozo 4,40.4022,-3.6082,2700,1988,2018,Media,C
+76,CEIP Pedro Duque,Educativo,19,Calle Forges 9,40.4021,-3.5993,4900,1995,2017,Alta,C
+77,Centro de Salud Vicálvaro,Sanitario,19,Calle Villablanca 81,40.4014,-3.6011,2500,1998,2019,Alta,B
+78,Centro Cultural El Madroño,Cultural,19,Calle Villardondiego 36,40.4033,-3.6063,3600,1987,2017,Media,C
+79,Oficina Municipal San Blas 1,Administrativo,20,Avenida Hellín 37,40.4302,-3.6234,2900,1986,2017,Media,C
+80,CEIP República de Panamá,Educativo,20,Calle Mota del Cuervo 51,40.4306,-3.617,5000,1975,2014,Media,D
+81,Centro de Salud San Blas,Sanitario,20,Calle Pobladura del Valle 11,40.4287,-3.6124,2500,1997,2018,Alta,B
+82,Centro Cultural Antonio Machado,Cultural,20,Calle San Román del Valle 8,40.4274,-3.6145,3600,1983,2016,Media,C
+83,Oficina Municipal Barajas 1,Administrativo,21,Plaza Mercurio 1,40.4775,-3.5796,2700,1989,2018,Alta,C
+84,CEIP Ciudad de Guadalajara,Educativo,21,Calle Alameda de Osuna 12,40.4701,-3.5802,4800,1980,2015,Alta,C
+85,Centro de Salud Barajas,Sanitario,21,Avenida Logroño 319,40.4773,-3.5781,2400,1998,2019,Alta,B
+86,Centro Cultural Gloria Fuertes,Cultural,21,Avenida Logroño 179,40.4676,-3.5901,3500,1985,2016,Alta,C
+87,Polideportivo Arganzuela,Deportivo,2,Paseo de la Chopera 71,40.3985,-3.6949,7200,1990,2017,Alta,B
+88,Polideportivo Daoiz y Velarde,Deportivo,3,Plaza Daoiz y Velarde 5,40.4083,-3.6704,6500,1988,2016,Alta,C
+89,Polideportivo Fuente del Berro,Deportivo,4,Calle Elvira 36,40.4254,-3.6683,6800,1985,2015,Media,C
+90,Polideportivo Chamartín,Deportivo,5,Avenida Pío XII 2,40.4577,-3.6789,7100,1982,2014,Alta,C
+91,Polideportivo Antonio Díaz Miguel,Deportivo,7,Calle Bravo Murillo 7,40.4266,-3.7035,6400,1986,2016,Alta,C
+92,Polideportivo La Masó,Deportivo,8,Calle La Masó 80,40.4939,-3.709,7300,1992,2018,Alta,B
+93,Polideportivo José María Cagigal,Deportivo,9,Calle Santa Pola 22,40.4284,-3.7298,7500,1975,2015,Media,C
+94,Polideportivo Gallur,Deportivo,10,Calle Gallur 2,40.3901,-3.7383,8200,2013,2019,Alta,A
+95,Polideportivo San Vicente de Paúl,Deportivo,11,Calle Portalegre 36,40.3763,-3.7287,6700,1984,2015,Media,C
+96,Polideportivo Orcasitas,Deportivo,12,Calle Rafaela Ybarra 52,40.3772,-3.6974,6600,1986,2016,Media,C
+97,Polideportivo Palomeras,Deportivo,13,Calle Tranvía de Arganda 4,40.3867,-3.6594,6800,1988,2017,Media,C
+98,Polideportivo Moratalaz,Deportivo,14,Calle Valdebernardo 2,40.4032,-3.6347,7100,1980,2014,Media,C
+99,Polideportivo San Juan Bautista,Deportivo,15,Calle Discóbolo 30,40.446,-3.6585,6400,1992,2018,Alta,B
+100,Polideportivo Luis Aragonés,Deportivo,16,Calle El Provencio 20,40.4616,-3.6462,7200,1995,2018,Alta,B
+101,Polideportivo Plata y Castañar,Deportivo,17,Paseo Plata y Castañar 7,40.3412,-3.6989,6900,1987,2017,Media,C
+102,Polideportivo Miguel Guillén Prim,Deportivo,18,Calle Fuentespina 6,40.374,-3.6061,7300,1998,2019,Alta,B
+103,Polideportivo Vicálvaro,Deportivo,19,Paseo del Polideportivo 3,40.4031,-3.602,7000,1990,2017,Media,C
+104,Polideportivo San Blas,Deportivo,20,Calle Arcos de Jalón 59,40.4222,-3.6174,6700,1985,2016,Media,C
+105,Polideportivo Barajas,Deportivo,21,Avenida Logroño 70,40.4637,-3.5959,6800,1991,2017,Alta,B
+106,Centro Social La Corrala,Social,1,Calle Mesón de Paredes 78,40.4103,-3.705,1700,1982,2015,Media,D
+107,Centro Social Arganzuela,Social,2,Calle Canarias 22,40.4024,-3.696,1900,1985,2016,Alta,C
+108,Centro Social Retiro Este,Social,3,Calle Luis Mitjans 12,40.4081,-3.6668,1800,1981,2014,Media,D
+109,Centro Social Guindalera,Social,4,Calle Cartagena 82,40.4329,-3.6695,1950,1987,2017,Alta,C
+110,Centro Social Prosperidad,Social,5,Calle Luis Cabrera 45,40.4417,-3.6693,1750,1983,2015,Media,D
+111,Centro Social Berruguete,Social,6,Calle San Enrique 16,40.46,-3.7045,1700,1984,2016,Media,D
+112,Centro Social Trafalgar,Social,7,Calle Jordán 27,40.431,-3.7041,1850,1980,2014,Media,D
+113,Centro Social El Pardo,Social,8,Calle Manuel Alonso 9,40.5179,-3.7744,1650,1988,2017,Media,D
+114,Centro Social Aravaca,Social,9,Calle Zarza 20,40.4578,-3.7812,1800,1986,2016,Media,C
+115,Centro Social Lucero,Social,10,Calle Alhambra 19,40.4012,-3.7392,1750,1982,2015,Media,D
+116,Centro Social Pan Bendito,Social,11,Calle Besolla 18,40.3813,-3.742,1650,1985,2016,Media,D
+117,Centro Social Orcasur,Social,12,Calle Campotejar 9,40.3725,-3.6978,1700,1983,2015,Media,D
+118,Centro Social Entrevías,Social,13,Calle Serena 52,40.3797,-3.6582,1800,1987,2017,Media,D
+119,Centro Social Pavones,Social,14,Calle Hacienda de Pavones 332,40.4018,-3.6346,1750,1984,2016,Media,D
+120,Centro Social Pueblo Nuevo,Social,15,Calle Francisco Villaespesa 14,40.4318,-3.6382,1800,1986,2016,Media,D
+121,Centro Social Manoteras,Social,16,Calle Cuevas de Almanzora 56,40.4764,-3.6549,1700,1988,2017,Media,D
+122,Centro Social San Cristóbal,Social,17,Calle Rocafort 5,40.3435,-3.6927,1650,1981,2014,Media,D
+123,Centro Social Ensanche de Vallecas,Social,18,Calle Peñaranda de Bracamonte 5,40.3704,-3.6058,1900,1999,2019,Alta,B
+124,Centro Social Valdebernardo,Social,19,Calle Ladera de los Almendros 8,40.3997,-3.6174,1750,1992,2018,Alta,C
+125,Centro Social Simancas,Social,20,Calle Castillo de Uclés 28,40.427,-3.6095,1700,1983,2015,Media,D
+126,Centro Social Alameda de Osuna,Social,21,Calle Balandro 11,40.4625,-3.5808,1850,1990,2018,Alta,C
