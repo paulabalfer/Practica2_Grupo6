@@ -7,9 +7,6 @@ from io import StringIO
 import boto3
 from botocore.exceptions import ClientError
 
-# # Configuración de rutas
-# BASE_DIR = Path(__file__).parent.parent  # Asume que el script está en proyecto/scripts/
-# ACCESS_DATA = BASE_DIR / 'data' / 'access'
 
 # Configurar cliente boto3 para MinIO
 s3 = boto3.client(
@@ -20,7 +17,7 @@ s3 = boto3.client(
 )
 
 # Leer archivo Parquet desde MinIO
-bucket_input = 'acces'
+bucket_input = 'access'
 
 # Parámetros de conexión
 db_user = 'postgres'
@@ -70,9 +67,6 @@ except ClientError as e:
     exit(1)
 
 
-# file_path = os.path.join(ACCESS_DATA, file_name)
-# df = pd.read_csv(file_path)  # Leer el fichero de datos
-
 cur.execute(create_fact_bicimad)  # Crear la tabla
 conn.commit()
 print('Tabla creada fact_bicimad_usos.')
@@ -109,9 +103,6 @@ try:
 except ClientError as e:
     print(f"Error leyendo el archivo desde MinIO: {e}")
     exit(1)
-
-# file_path = os.path.join(ACCESS_DATA, file_name)
-# df = pd.read_csv(file_path)  # Leer el fichero de datos
 
 cur.execute(create_fact_ocupacion)  # Crear la tabla
 conn.commit()
@@ -153,8 +144,6 @@ except ClientError as e:
     print(f"Error leyendo el archivo desde MinIO: {e}")
     exit(1)
     
-# file_path = os.path.join(ACCESS_DATA, file_name)
-# df = pd.read_csv(file_path)  # Leer el fichero de datos
 
 cur.execute(create_fact_densidad_y_transportes)  # Crear la tabla
 conn.commit()
@@ -192,9 +181,6 @@ try:
 except ClientError as e:
     print(f"Error leyendo el archivo desde MinIO: {e}")
     exit(1)
-    
-# file_path = os.path.join(ACCESS_DATA, file_name)
-# df = pd.read_csv(file_path)  # Leer el fichero de datos
 
 cur.execute(create_dim_usuario)  # Crear la tabla
 conn.commit()
@@ -235,10 +221,6 @@ try:
 except ClientError as e:
     print(f"Error leyendo el archivo desde MinIO: {e}")
     exit(1)
-    
-# file_name = 'dim_estacion.csv'
-# file_path = os.path.join(ACCESS_DATA, file_name)
-# df = pd.read_csv(file_path)  # Leer el fichero de datos
 
 cur.execute(create_dim_estacion)  # Crear la tabla
 conn.commit()
@@ -278,9 +260,6 @@ except ClientError as e:
     print(f"Error leyendo el archivo desde MinIO: {e}")
     exit(1)
 
-# file_path = os.path.join(ACCESS_DATA, file_name)
-# df = pd.read_csv(file_path)  # Leer el fichero de datos
-
 cur.execute(create_dim_distrito)  # Crear la tabla
 conn.commit()
 print('Tabla creada dim_distrito.')
@@ -318,9 +297,6 @@ try:
 except ClientError as e:
     print(f"Error leyendo el archivo desde MinIO: {e}")
     exit(1)
-
-# file_path = os.path.join(ACCESS_DATA, file_name)
-# df = pd.read_csv(file_path)  # Leer el fichero de datos
 
 cur.execute(create_dim_tiempo)  # Crear la tabla
 conn.commit()
@@ -366,8 +342,6 @@ try:
 except ClientError as e:
     print(f"Error leyendo el archivo desde MinIO: {e}")
     exit(1)
-# file_path = os.path.join(ACCESS_DATA, file_name)
-# df = pd.read_csv(file_path)  # Leer el fichero de datos
 
 cur.execute(create_dim_aparcamiento)  # Crear la tabla
 conn.commit()

@@ -9,13 +9,6 @@ import os
 from botocore.exceptions import ClientError
 
 
-# # Configuración de rutas
-# BASE_DIR = Path(__file__).parent.parent  # Asume que el script está en proyecto/scripts/
-# RAW_DATA = BASE_DIR /'data' / 'raw'
-# PROCESSED_DATA = BASE_DIR / 'data' / 'processed'
-# os.makedirs(PROCESSED_DATA, exist_ok=True)
-
-
 # Configurar cliente boto3 para MinIO
 s3 = boto3.client(
     's3',
@@ -59,10 +52,6 @@ for tabla in tablas:
         df['fecha'] = pd.to_datetime(df['fecha'])  # Aseguro formato datetime
         df['dia_semana'] = df['fecha'].dt.day_name() # Agregar nombre del día
 
-    # output_path = os.path.join(PROCESSED_DATA, f'{tabla}.parquet')
-    # df.to_parquet(output_path, index=False)
-    # print(f"Exportada {output_path}")
-    
     buffer = BytesIO()
     df.to_parquet(buffer, index=False)
     buffer.seek(0)  # Importante: volver al inicio del buffer
@@ -148,9 +137,3 @@ try:
 except Exception as e:
     print(f"Error al guardar el archivo localmente: {e}")
     exit(1)
-
-
-# # Guardar datos
-# output_path = os.path.join(PROCESSED_DATA, 'bicimad_usos_processed.csv')
-# df.to_csv(output_path, index=False)
-# print(f"Exportada {output_path}")

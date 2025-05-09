@@ -9,11 +9,6 @@ import boto3
 import os
 from botocore.exceptions import ClientError
 
-# # Configuración de rutas
-# BASE_DIR = Path(__file__).parent.parent  # Asume que el script está en proyecto/scripts/
-# PROCESSED_DATA = BASE_DIR / 'data' / 'processed'
-# csv_path = os.path.join(PROCESSED_DATA, 'bicimad_usos_processed.csv') # Ruta al archivo CSV
-
 # Configurar cliente boto3 para MinIO
 s3 = boto3.client(
     's3',
@@ -56,7 +51,7 @@ except ClientError as e:
 # Definición de la tabla 
 create_table_sql = """
 CREATE TABLE IF NOT EXISTS bicimad_usos (
-    id INT PRIMARY KEY,
+    id INT,
     usuario_id INT,
     tipo_usuario VARCHAR(20),
     estacion_origen INT,
