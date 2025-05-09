@@ -18,8 +18,23 @@ try:
 except ClientError:
     minio.create_bucket(Bucket=bucket)
 
-raw_path = 'data/raw/trafico-horario.csv'
+# Archivos a subir
+files = [
+    ('data/raw/trafico-horario.csv', 'trafico-horario.csv'),
+    ('data/raw/avisamadrid.json', 'avisamadrid.json'),
+    ('data/raw/ext_aparcamientos_info.csv', 'ext_aparcamientos_info.csv'),
+    ('data/raw/parkings-rotacion.csv', 'parkings-rotacion.csv'),
+    ('data/raw/bicimad-usos.csv', 'bicimad-usos.csv'),
+    ('data/raw/dump-bbdd-municipal.sql', 'dump-bbdd-municipal.sql')
+]
 
-# Subir archivo final a MinIO
-with open(raw_path, 'rb') as f:
-    minio.upload_fileobj(f, bucket, 'trafico-horario.csv')
+# Subir archivos uno por uno
+for local_path, object_name in files:
+    try:
+        with open(local_path, 'rb') as f:
+            minio.upload_fileobj(f, bucket, object_name)
+        print(f"{object_name} subido correctamente.")
+    except FileNotFoundError:
+        print(f"ERROR: No se encontró el archivo {local_path}.")
+    except ClientError as e:
+        print(f"Error subiendo {object_name} a MinIO: {e}")

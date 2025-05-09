@@ -5,7 +5,7 @@ from pathlib import Path
 
 # Configuración de rutas
 BASE_DIR = Path(__file__).parent.parent  # Asume que el script está en proyecto/scripts/
-RAW_DATA = BASE_DIR / 'data' / 'raw'
+PROCESSED_DATA = BASE_DIR / 'data' / 'processed'
 ACCESS_DATA = BASE_DIR / 'data' / 'access'
 os.makedirs(ACCESS_DATA, exist_ok=True)
 
@@ -102,8 +102,9 @@ print(f"Exportada {output_path_4}")
 
 consulta_sql_5 = """
 SELECT 
-	b.fecha_hora_inicio, 
-    b.fecha_hora_fin
+	b.fecha, 
+    b.hora_inicio, 
+    b.hora_fin
 FROM bicimad_usos b; 
 """
 
@@ -115,13 +116,13 @@ df_5.to_csv(output_path_5, index=False)
 print(f"Exportada {output_path_5}")
 
 # "Copia" de los csvs para las que las tablas de hechos son fieles a ellos 
-file_path_1 = os.path.join(RAW_DATA, 'bicimad-usos.csv')
+file_path_1 = os.path.join(PROCESSED_DATA, 'bicimad_usos_processed.csv')
 output_path_6 = os.path.join(ACCESS_DATA, 'hecho_bicimad_usos.csv')
 df_6 = pd.read_csv(file_path_1)
 df_6.to_csv(output_path_6, index=False)
 print(f"Exportada {output_path_6}")
 
-file_path_2 = os.path.join(RAW_DATA, 'ext_aparcamientos_info.csv')
+file_path_2 = os.path.join(PROCESSED_DATA, 'aparcamientos_info_processed.csv')
 output_path_7 = os.path.join(ACCESS_DATA, 'dim_aparcamiento.csv')
 df_7 = pd.read_csv(file_path_2)
 df_7.to_csv(output_path_7, index=False)

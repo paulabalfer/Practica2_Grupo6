@@ -34,15 +34,8 @@ def calcular_variaciones_ocupacion(rotacion, info):
     df_variacion_diaria = df_diario.groupby('aparcamiento_id')['variacion_diaria'].mean().reset_index()  # Promedio diario
     df_variacion_semanal = df_semanal.groupby('aparcamiento_id')['variacion_semanal'].mean().reset_index()  # Promedio semanal
 
-    # 5. Añadir plazas_libres, plazas_ocupadas y porcentaje_ocupacion promedio por aparcamiento
-    # df_ocupacion = rotacion.groupby('aparcamiento_id')[['plazas_libres', 'plazas_ocupadas', 'porcentaje_ocupacion']].mean().reset_index()
-    # Si prefieres el último valor registrado en vez del promedio, usa:
-    # idx = rotacion.groupby('aparcamiento_id')['fecha'].idxmax()
-    # df_ocupacion = rotacion.loc[idx, ['aparcamiento_id', 'plazas_libres', 'plazas_ocupadas', 'porcentaje_ocupacion']]
-
-    # 6. Combinar todos los resultados
+    # 5. Combinar todos los resultados
     df_combinado = pd.merge(df_variacion_diaria, df_variacion_semanal, on='aparcamiento_id', how='left')
-    # df_combinado = pd.merge(df_combinado, df_ocupacion, on='aparcamiento_id', how='left')
 
     return df_combinado
 
@@ -54,9 +47,6 @@ try:
 
     # Transformaciones
     prepared = calcular_variaciones_ocupacion(rotacion, ubicacion)
-    # # Filtro de columnas
-    # cols = ['aparcamiento_id', 'variacion_diaria', 'variacion_semanal', 'nombre_x', 'latitud_x', 'longitud_x']
-    # prepared = prepared[cols]
 
     # Guardar datos 
     os.makedirs(ACCESS_DATA.parent, exist_ok=True)

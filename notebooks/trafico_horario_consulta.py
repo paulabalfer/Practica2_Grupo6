@@ -20,8 +20,8 @@ df = pd.read_parquet(parquet_data)
 
 # Tu lógica original
 mayor_congestion = df[df['nivel_congestion'] == 'Muy Alta']
-print('Horarios de mayor congestión de tráfico en Madrid y tipos de vehículos predominantes:')
+print('Horarios de mayor congestion de trafico en Madrid y tipos de vehiculos predominantes:')
 for _, fila in mayor_congestion.iterrows():
     hora = fila['hora']
     vehiculo = fila['vehiculo_predominante']
-    print(f"A las {hora}:00 horas, el vehículo predominante es el {vehiculo}.")
+    print(f"A las {hora}:00 horas, el vehiculo predominante es el {vehiculo}.")

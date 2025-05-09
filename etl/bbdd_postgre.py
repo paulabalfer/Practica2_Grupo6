@@ -34,8 +34,9 @@ CREATE TABLE IF NOT EXISTS fact_bicimad_usos (
     tipo_usuario VARCHAR(20),
     estacion_origen INT,
     estacion_destino INT,
-    fecha_hora_inicio TIMESTAMP,
-    fecha_hora_fin TIMESTAMP,
+    fecha DATE, 
+    hora_inicio TIME,
+    hora_fin TIME,
     duracion_segundos INT,
     distancia_km FLOAT,
     calorias_estimadas INT,
@@ -55,8 +56,8 @@ print('Tabla creada fact_bicimad_usos.')
 # Insertar los datos fila a fila
 for _, row in df.iterrows():
     cur.execute(
-        "INSERT INTO fact_bicimad_usos (id, usuario_id, tipo_usuario, estacion_origen, estacion_destino, fecha_hora_inicio, fecha_hora_fin, duracion_segundos, distancia_km, calorias_estimadas, co2_evitado_gramos) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-        (row['id'], row['usuario_id'], row['tipo_usuario'], row['estacion_origen'], row['estacion_destino'], row['fecha_hora_inicio'], row['fecha_hora_fin'], row['duracion_segundos'], row['distancia_km'], row['calorias_estimadas'], row['co2_evitado_gramos'])
+        "INSERT INTO fact_bicimad_usos (id, usuario_id, tipo_usuario, estacion_origen, estacion_destino, fecha, hora_inicio, hora_fin, duracion_segundos, distancia_km, calorias_estimadas, co2_evitado_gramos) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+        (row['id'], row['usuario_id'], row['tipo_usuario'], row['estacion_origen'], row['estacion_destino'], row['fecha'], row['hora_inicio'], row['hora_fin'], row['duracion_segundos'], row['distancia_km'], row['calorias_estimadas'], row['co2_evitado_gramos'])
     )
 conn.commit()
 
@@ -233,8 +234,9 @@ print(f"Filas importadas en dim_distrito: {cur.fetchone()[0]}")
 # Definición de la tabla 
 create_dim_tiempo = """
 CREATE TABLE IF NOT EXISTS dim_tiempo (
-    fecha_hora_inicio TIMESTAMP, 
-    fecha_hora_fin TIMESTAMP
+    fecha DATE, 
+    hora_inicio TIME, 
+    hora_fin TIME
 );
 """
 
@@ -250,8 +252,8 @@ print('Tabla creada dim_tiempo.')
 # Insertar los datos fila a fila
 for _, row in df.iterrows():
     cur.execute(
-        "INSERT INTO dim_tiempo (fecha_hora_inicio, fecha_hora_fin) VALUES (%s, %s)",
-        (row['fecha_hora_inicio'], row['fecha_hora_fin'])
+        "INSERT INTO dim_tiempo (fecha, hora_inicio, hora_fin) VALUES (%s, %s, %s)",
+        (row['fecha'], row['hora_inicio'], row['hora_fin'])
     )
 conn.commit()
 

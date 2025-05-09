@@ -5,8 +5,8 @@ from pathlib import Path
 
 # Configuración de rutas
 BASE_DIR = Path(__file__).parent.parent  # Asume que el script está en proyecto/scripts/
-RAW_DATA = BASE_DIR / 'data' / 'raw'
-csv_path = os.path.join(RAW_DATA, 'bicimad-usos.csv') # Ruta al archivo CSV
+PROCESSED_DATA = BASE_DIR / 'data' / 'processed'
+csv_path = os.path.join(PROCESSED_DATA, 'bicimad_usos_processed.csv') # Ruta al archivo CSV
 
 # Parámetros de conexión
 db_user = 'postgres'
@@ -37,8 +37,9 @@ CREATE TABLE IF NOT EXISTS bicimad_usos (
     tipo_usuario VARCHAR(20),
     estacion_origen INT,
     estacion_destino INT,
-    fecha_hora_inicio TIMESTAMP,
-    fecha_hora_fin TIMESTAMP,
+    fecha DATE, 
+    hora_inicio TIME,
+    hora_fin TIME,
     duracion_segundos INT,
     distancia_km FLOAT,
     calorias_estimadas INT,
@@ -53,8 +54,8 @@ conn.commit()
 # 2. Insertar los datos fila a fila
 for _, row in df.iterrows():
     cur.execute(
-        "INSERT INTO bicimad_usos (id, usuario_id, tipo_usuario, estacion_origen, estacion_destino, fecha_hora_inicio, fecha_hora_fin, duracion_segundos, distancia_km, calorias_estimadas, co2_evitado_gramos) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-        (row['id'], row['usuario_id'], row['tipo_usuario'], row['estacion_origen'], row['estacion_destino'], row['fecha_hora_inicio'], row['fecha_hora_fin'], row['duracion_segundos'], row['distancia_km'], row['calorias_estimadas'], row['co2_evitado_gramos'])
+        "INSERT INTO bicimad_usos (id, usuario_id, tipo_usuario, estacion_origen, estacion_destino, fecha, hora_inicio, hora_fin, duracion_segundos, distancia_km, calorias_estimadas, co2_evitado_gramos) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+        (row['id'], row['usuario_id'], row['tipo_usuario'], row['estacion_origen'], row['estacion_destino'], row['fecha'], row['hora_inicio'], row['hora_fin'], row['duracion_segundos'], row['distancia_km'], row['calorias_estimadas'], row['co2_evitado_gramos'])
     )
 conn.commit()
 
