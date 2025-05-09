@@ -2,13 +2,25 @@ import pandas as pd
 import psycopg2
 import os
 from pathlib import Path
+from io import BytesIO
+from io import StringIO
+import boto3
+from botocore.exceptions import ClientError
 
-# Configuración de rutas
-BASE_DIR = Path(__file__).parent.parent  # Asume que el script está en proyecto/scripts/
-PROCESSED_DATA = BASE_DIR / 'data' / 'processed'
-ACCESS_DATA = BASE_DIR / 'data' / 'access'
-os.makedirs(ACCESS_DATA, exist_ok=True)
+# # Configuración de rutas
+# BASE_DIR = Path(__file__).parent.parent  # Asume que el script está en proyecto/scripts/
+# PROCESSED_DATA = BASE_DIR / 'data' / 'processed'
+# ACCESS_DATA = BASE_DIR / 'data' / 'access'
+# os.makedirs(ACCESS_DATA, exist_ok=True)
 
+# Configurar cliente boto3 para MinIO
+s3 = boto3.client(
+    's3',
+    endpoint_url=os.environ.get("MINIO_ENDPOINT", "http://localhost:9000"),
+    aws_access_key_id=os.environ.get("MINIO_ACCESS_KEY", "minioadmin"),
+    aws_secret_access_key=os.environ.get("MINIO_SECRET_KEY", "minioadmin")
+)
+    
 # Parámetros de conexión
 db_user = 'postgres'
 db_pass = 'postgres'
@@ -25,6 +37,29 @@ conn = psycopg2.connect(
     port=db_port
 )
 
+def create_bucket_if_not_exists(bucket_name):
+    try:
+        s3.head_bucket(Bucket=bucket_name)
+    except ClientError:
+        try:
+            s3.create_bucket(Bucket=bucket_name)
+            print(f"Bucket '{bucket_name}' creado.")
+        except ClientError as e:
+            print(f"Error creando el bucket '{bucket_name}': {e}")
+            raise
+
+# Leer archivo Parquet desde MinIO
+bucket_input = 'processed'
+key_input = 'trafico_horario_processed.parquet'
+
+try:
+    response = s3.get_object(Bucket=bucket_input, Key=key_input)
+    parquet_data = BytesIO(response['Body'].read())
+    df = pd.read_parquet(parquet_data)
+except ClientError as e:
+    print(f"Error leyendo el archivo desde MinIO: {e}")
+    exit(1)
+
 # --- Consulta 1: Tabla de hechos densidad de población e infraestructuras de transportes ---
 
 consulta_sql_1 = """
@@ -39,11 +74,43 @@ LEFT JOIN estaciones_transporte et ON d.id = et.distrito_id;
 """
 
 # Ejecución e importación 
-output_file_1 = 'hecho_densidad_y_transportes.csv'
+
 df_1 = pd.read_sql_query(consulta_sql_1, conn)
-output_path_1 = os.path.join(ACCESS_DATA, output_file_1)
-df_1.to_csv(output_path_1, index=False)
-print(f"Exportada {output_path_1}")
+
+# Convertir DataFrame a Parquet en memoria
+parquet_buffer = BytesIO()
+df_1.to_parquet(parquet_buffer, index=False)
+parquet_data_bytes = parquet_buffer.getvalue()  # Guardamos copia del contenido
+parquet_buffer.close()
+
+# Subir archivo Parquet a MinIO (access)
+bucket_output = 'access'
+key_output = 'hecho_densidad_y_transportes.parquet'
+
+try:
+    create_bucket_if_not_exists(bucket_output)
+    s3.upload_fileobj(BytesIO(parquet_data_bytes), bucket_output, key_output)
+    print("Archivo Parquet de access subido a MinIO.")
+except ClientError as e:
+    print(f"Error subiendo archivo a bucket 'access': {e}")
+    exit(1)
+
+# Guardar localmente
+Path("data/access").mkdir(parents=True, exist_ok=True)
+try:
+    with open("data/access/hecho_densidad_y_transportes.parquet", "wb") as f:
+        f.write(parquet_data_bytes)
+    print("Archivo Parquet de access guardado localmente.")
+except Exception as e:
+    print(f"Error al guardar el archivo localmente: {e}")
+    exit(1)
+
+    
+# output_file_1 = 'hecho_densidad_y_transportes.parquet'
+# df_1 = pd.read_sql_query(consulta_sql_1, conn)
+# output_path_1 = os.path.join(ACCESS_DATA, output_file_1)
+# df_1.to_csv(output_path_1, index=False)
+# print(f"Exportada {output_path_1}")
 
 # --- Consulta 2: Dimensión de usuario para el objetivo 2 ---
 
@@ -55,12 +122,39 @@ FROM bicimad_usos b ;
 """
 
 # Ejecución e importación 
-output_file_2 = 'dim_usuario.csv'
-df_2 = pd.read_sql_query(consulta_sql_2, conn)
-output_path_2 = os.path.join(ACCESS_DATA, output_file_2)
-df_2.to_csv(output_path_2, index=False)
-print(f"Exportada {output_path_2}")
 
+# Ejecución e importación 
+
+df_2 = pd.read_sql_query(consulta_sql_2, conn)
+
+# Convertir DataFrame a Parquet en memoria
+parquet_buffer = BytesIO()
+df_2.to_parquet(parquet_buffer, index=False)
+parquet_data_bytes = parquet_buffer.getvalue()  # Guardamos copia del contenido
+parquet_buffer.close()
+
+# Subir archivo Parquet a MinIO (access)
+bucket_output = 'access'
+key_output = 'dim_usuario.parquet'
+
+try:
+    create_bucket_if_not_exists(bucket_output)
+    s3.upload_fileobj(BytesIO(parquet_data_bytes), bucket_output, key_output)
+    print("Archivo Parquet de access subido a MinIO.")
+except ClientError as e:
+    print(f"Error subiendo archivo a bucket 'access': {e}")
+    exit(1)
+
+# Guardar localmente
+Path("data/access").mkdir(parents=True, exist_ok=True)
+try:
+    with open("data/access/dim_usuario.parquet", "wb") as f:
+        f.write(parquet_data_bytes)
+    print("Archivo Parquet de access guardado localmente.")
+except Exception as e:
+    print(f"Error al guardar el archivo localmente: {e}")
+    exit(1)
+    
 # --- Consulta 3: Dimensión de estación para el objetivo 2 ---
 
 consulta_sql_3 = """
@@ -77,9 +171,34 @@ FROM estaciones_transporte et ;
 # Ejecución e importación 
 output_file_3 = 'dim_estacion.csv'
 df_3 = pd.read_sql_query(consulta_sql_3, conn)
-output_path_3 = os.path.join(ACCESS_DATA, output_file_3)
-df_3.to_csv(output_path_3, index=False)
-print(f"Exportada {output_path_3}")
+
+# Convertir DataFrame a Parquet en memoria
+parquet_buffer = BytesIO()
+df_3.to_parquet(parquet_buffer, index=False)
+parquet_data_bytes = parquet_buffer.getvalue()  # Guardamos copia del contenido
+parquet_buffer.close()
+
+# Subir archivo Parquet a MinIO (access)
+bucket_output = 'access'
+key_output = 'dim_estacion.parquet'
+
+try:
+    create_bucket_if_not_exists(bucket_output)
+    s3.upload_fileobj(BytesIO(parquet_data_bytes), bucket_output, key_output)
+    print("Archivo Parquet de access subido a MinIO.")
+except ClientError as e:
+    print(f"Error subiendo archivo a bucket 'access': {e}")
+    exit(1)
+
+# Guardar localmente
+Path("data/access").mkdir(parents=True, exist_ok=True)
+try:
+    with open("data/access/dim_estacion.parquet", "wb") as f:
+        f.write(parquet_data_bytes)
+    print("Archivo Parquet de access guardado localmente.")
+except Exception as e:
+    print(f"Error al guardar el archivo localmente: {e}")
+    exit(1)
 
 # --- Consulta 4: Dimensión de distrito para el objetivo 2 ---
 
@@ -92,11 +211,36 @@ FROM distritos d;
 """
 
 # Ejecución e importación 
-output_file_4 = 'dim_distrito.csv'
+
 df_4 = pd.read_sql_query(consulta_sql_4, conn)
-output_path_4 = os.path.join(ACCESS_DATA, output_file_4)
-df_4.to_csv(output_path_4, index=False)
-print(f"Exportada {output_path_4}")
+
+# Convertir DataFrame a Parquet en memoria
+parquet_buffer = BytesIO()
+df_4.to_parquet(parquet_buffer, index=False)
+parquet_data_bytes = parquet_buffer.getvalue()  # Guardamos copia del contenido
+parquet_buffer.close()
+
+# Subir archivo Parquet a MinIO (access)
+bucket_output = 'access'
+key_output = 'dim_distrito.parquet'
+
+try:
+    create_bucket_if_not_exists(bucket_output)
+    s3.upload_fileobj(BytesIO(parquet_data_bytes), bucket_output, key_output)
+    print("Archivo Parquet de access subido a MinIO.")
+except ClientError as e:
+    print(f"Error subiendo archivo a bucket 'access': {e}")
+    exit(1)
+
+# Guardar localmente
+Path("data/access").mkdir(parents=True, exist_ok=True)
+try:
+    with open("data/access/dim_distrito.parquet", "wb") as f:
+        f.write(parquet_data_bytes)
+    print("Archivo Parquet de access guardado localmente.")
+except Exception as e:
+    print(f"Error al guardar el archivo localmente: {e}")
+    exit(1)
 
 # --- Consulta 5: Dimensión de tiempo para el objetivo 2 ---
 
@@ -111,21 +255,123 @@ FROM bicimad_usos b;
 # Ejecución e importación 
 output_file_5 = 'dim_tiempo.csv'
 df_5 = pd.read_sql_query(consulta_sql_5, conn)
-output_path_5 = os.path.join(ACCESS_DATA, output_file_5)
-df_5.to_csv(output_path_5, index=False)
-print(f"Exportada {output_path_5}")
 
-# "Copia" de los csvs para las que las tablas de hechos son fieles a ellos 
-file_path_1 = os.path.join(PROCESSED_DATA, 'bicimad_usos_processed.csv')
-output_path_6 = os.path.join(ACCESS_DATA, 'hecho_bicimad_usos.csv')
-df_6 = pd.read_csv(file_path_1)
-df_6.to_csv(output_path_6, index=False)
-print(f"Exportada {output_path_6}")
+# Convertir DataFrame a Parquet en memoria
+parquet_buffer = BytesIO()
+df_5.to_parquet(parquet_buffer, index=False)
+parquet_data_bytes = parquet_buffer.getvalue()  # Guardamos copia del contenido
+parquet_buffer.close()
 
-file_path_2 = os.path.join(PROCESSED_DATA, 'aparcamientos_info_processed.csv')
-output_path_7 = os.path.join(ACCESS_DATA, 'dim_aparcamiento.csv')
-df_7 = pd.read_csv(file_path_2)
-df_7.to_csv(output_path_7, index=False)
-print(f"Exportada {output_path_7}")
+# Subir archivo Parquet a MinIO (access)
+bucket_output = 'access'
+key_output = 'dim_tiempo.parquet'
+
+try:
+    create_bucket_if_not_exists(bucket_output)
+    s3.upload_fileobj(BytesIO(parquet_data_bytes), bucket_output, key_output)
+    print("Archivo Parquet de access subido a MinIO.")
+except ClientError as e:
+    print(f"Error subiendo archivo a bucket 'access': {e}")
+    exit(1)
+
+# Guardar localmente
+Path("data/access").mkdir(parents=True, exist_ok=True)
+try:
+    with open("data/access/dim_tiempo.parquet", "wb") as f:
+        f.write(parquet_data_bytes)
+    print("Archivo Parquet de access guardado localmente.")
+except Exception as e:
+    print(f"Error al guardar el archivo localmente: {e}")
+    exit(1)
+
+# "Copia" de los csvs para las que las tablas de hechos son fieles a ellos
+
+# Leer archivo Parquet desde MinIO
+bucket_input = 'processed'
+key_input = 'bicimad_usos_processed.parquet'
+
+try:
+    response = s3.get_object(Bucket=bucket_input, Key=key_input)
+    parquet_data = BytesIO(response['Body'].read())
+    df = pd.read_parquet(parquet_data)
+except ClientError as e:
+    print(f"Error leyendo el archivo desde MinIO: {e}")
+    exit(1)
+    
+# Convertir DataFrame a Parquet en memoria
+parquet_buffer = BytesIO()
+df.to_parquet(parquet_buffer, index=False)
+parquet_data_bytes = parquet_buffer.getvalue()  # Guardamos copia del contenido
+parquet_buffer.close()
+
+# Subir archivo Parquet a MinIO (access)
+bucket_output = 'access'
+key_output = 'hecho_bicimad_usos.parquet'
+
+try:
+    create_bucket_if_not_exists(bucket_output)
+    s3.upload_fileobj(BytesIO(parquet_data_bytes), bucket_output, key_output)
+    print("Archivo Parquet de access subido a MinIO.")
+except ClientError as e:
+    print(f"Error subiendo archivo a bucket 'access': {e}")
+    exit(1)
+
+# Guardar localmente
+Path("data/access").mkdir(parents=True, exist_ok=True)
+try:
+    with open("data/access/hecho_bicimad_usos.parquet", "wb") as f:
+        f.write(parquet_data_bytes)
+    print("Archivo Parquet de access guardado localmente.")
+except Exception as e:
+    print(f"Error al guardar el archivo localmente: {e}")
+    exit(1)
+
+
+# Leer archivo Parquet desde MinIO
+bucket_input = 'processed'
+key_input = 'aparcamientos_info_processed.parquet'
+
+try:
+    response = s3.get_object(Bucket=bucket_input, Key=key_input)
+    parquet_data = BytesIO(response['Body'].read())
+    df = pd.read_parquet(parquet_data)
+except ClientError as e:
+    print(f"Error leyendo el archivo desde MinIO: {e}")
+    exit(1)
+
+# Subir archivo Parquet a MinIO (access)
+bucket_output = 'access'
+key_output = 'dim_aparcamiento.parquet'
+
+try:
+    create_bucket_if_not_exists(bucket_output)
+    s3.upload_fileobj(BytesIO(parquet_data_bytes), bucket_output, key_output)
+    print("Archivo Parquet de access subido a MinIO.")
+except ClientError as e:
+    print(f"Error subiendo archivo a bucket 'access': {e}")
+    exit(1)
+
+
+# Guardar localmente
+Path("data/access").mkdir(parents=True, exist_ok=True)
+try:
+    with open("data/access/dim_aparcamiento.parquet", "wb") as f:
+        f.write(parquet_data_bytes)
+    print("Archivo Parquet de access guardado localmente.")
+except Exception as e:
+    print(f"Error al guardar el archivo localmente: {e}")
+    exit(1)
+    
+# file_path_1 = os.path.join(PROCESSED_DATA, 'bicimad_usos_processed.csv')
+# output_path_6 = os.path.join(ACCESS_DATA, 'hecho_bicimad_usos.csv')
+# df_6 = pd.read_csv(file_path_1)
+# df_6.to_csv(output_path_6, index=False)
+# print(f"Exportada {output_path_6}")
+
+# file_path_2 = os.path.join(PROCESSED_DATA, 'aparcamientos_info_processed.csv')
+# output_path_7 = os.path.join(ACCESS_DATA, 'dim_aparcamiento.csv')
+# df_7 = pd.read_csv(file_path_2)
+# df_7.to_csv(output_path_7, index=False)
+# print(f"Exportada {output_path_7}")
 
 conn.close()

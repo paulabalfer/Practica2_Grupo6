@@ -1,12 +1,26 @@
 import psycopg2
 import pandas as pd
+import psycopg2
 import os
 from pathlib import Path
+from io import BytesIO
+from io import StringIO
+import boto3
+import os
+from botocore.exceptions import ClientError
 
-# Configuración de rutas
-BASE_DIR = Path(__file__).parent.parent  # Asume que el script está en proyecto/scripts/
-PROCESSED_DATA = BASE_DIR / 'data' / 'processed'
-csv_path = os.path.join(PROCESSED_DATA, 'bicimad_usos_processed.csv') # Ruta al archivo CSV
+# # Configuración de rutas
+# BASE_DIR = Path(__file__).parent.parent  # Asume que el script está en proyecto/scripts/
+# PROCESSED_DATA = BASE_DIR / 'data' / 'processed'
+# csv_path = os.path.join(PROCESSED_DATA, 'bicimad_usos_processed.csv') # Ruta al archivo CSV
+
+# Configurar cliente boto3 para MinIO
+s3 = boto3.client(
+    's3',
+    endpoint_url=os.environ.get("MINIO_ENDPOINT", "http://localhost:9000"),
+    aws_access_key_id=os.environ.get("MINIO_ACCESS_KEY", "minioadmin"),
+    aws_secret_access_key=os.environ.get("MINIO_SECRET_KEY", "minioadmin")
+)
 
 # Parámetros de conexión
 db_user = 'postgres'
@@ -26,8 +40,18 @@ conn = psycopg2.connect(
 cur = conn.cursor() # inicio un cursos
 
 
-# Lee el CSV con pandas
-df = pd.read_csv(csv_path)
+
+# Leer parquet desde MinIO
+bucket_input = 'processed'
+key_input = 'bicimad_usos_processed.parquet'
+
+try:
+    response = s3.get_object(Bucket=bucket_input, Key=key_input)
+    parquet_data = BytesIO(response['Body'].read())
+    df = pd.read_parquet(parquet_data)
+except ClientError as e:
+    print(f"Error leyendo el archivo desde MinIO: {e}")
+    exit(1)
 
 # Definición de la tabla 
 create_table_sql = """

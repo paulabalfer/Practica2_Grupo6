@@ -2,10 +2,25 @@ import pandas as pd
 import psycopg2
 import os
 from pathlib import Path
+from io import BytesIO
+from io import StringIO
+import boto3
+from botocore.exceptions import ClientError
 
-# Configuración de rutas
-BASE_DIR = Path(__file__).parent.parent  # Asume que el script está en proyecto/scripts/
-ACCESS_DATA = BASE_DIR / 'data' / 'access'
+# # Configuración de rutas
+# BASE_DIR = Path(__file__).parent.parent  # Asume que el script está en proyecto/scripts/
+# ACCESS_DATA = BASE_DIR / 'data' / 'access'
+
+# Configurar cliente boto3 para MinIO
+s3 = boto3.client(
+    's3',
+    endpoint_url=os.environ.get("MINIO_ENDPOINT", "http://localhost:9000"),
+    aws_access_key_id=os.environ.get("MINIO_ACCESS_KEY", "minioadmin"),
+    aws_secret_access_key=os.environ.get("MINIO_SECRET_KEY", "minioadmin")
+)
+
+# Leer archivo Parquet desde MinIO
+bucket_input = 'acces'
 
 # Parámetros de conexión
 db_user = 'postgres'
@@ -44,10 +59,19 @@ CREATE TABLE IF NOT EXISTS fact_bicimad_usos (
 );
 """
 
-# Ejecución e importación de datos 
-file_name = 'hecho_bicimad_usos.csv'
-file_path = os.path.join(ACCESS_DATA, file_name)
-df = pd.read_csv(file_path)  # Leer el fichero de datos
+# Ejecución e importación de datos
+key_input = 'hecho_bicimad_usos.parquet'
+try:
+    response = s3.get_object(Bucket=bucket_input, Key=key_input)
+    parquet_data = BytesIO(response['Body'].read())
+    df = pd.read_parquet(parquet_data)
+except ClientError as e:
+    print(f"Error leyendo el archivo desde MinIO: {e}")
+    exit(1)
+
+
+# file_path = os.path.join(ACCESS_DATA, file_name)
+# df = pd.read_csv(file_path)  # Leer el fichero de datos
 
 cur.execute(create_fact_bicimad)  # Crear la tabla
 conn.commit()
@@ -77,9 +101,17 @@ CREATE TABLE IF NOT EXISTS fact_ocupacion (
 """
 
 # Ejecución e importación de datos 
-file_name = 'hecho_ocupacion.csv'
-file_path = os.path.join(ACCESS_DATA, file_name)
-df = pd.read_csv(file_path)  # Leer el fichero de datos
+key_input = 'hecho_ocupacion.parquet'
+try:
+    response = s3.get_object(Bucket=bucket_input, Key=key_input)
+    parquet_data = BytesIO(response['Body'].read())
+    df = pd.read_parquet(parquet_data)
+except ClientError as e:
+    print(f"Error leyendo el archivo desde MinIO: {e}")
+    exit(1)
+
+# file_path = os.path.join(ACCESS_DATA, file_name)
+# df = pd.read_csv(file_path)  # Leer el fichero de datos
 
 cur.execute(create_fact_ocupacion)  # Crear la tabla
 conn.commit()
@@ -111,9 +143,18 @@ CREATE TABLE IF NOT EXISTS fact_densidad_y_transportes (
 """
 
 # Ejecución e importación de datos 
-file_name = 'hecho_densidad_y_transportes.csv'
-file_path = os.path.join(ACCESS_DATA, file_name)
-df = pd.read_csv(file_path)  # Leer el fichero de datos
+key_input = 'hecho_densidad_y_transportes.parquet'
+
+try:
+    response = s3.get_object(Bucket=bucket_input, Key=key_input)
+    parquet_data = BytesIO(response['Body'].read())
+    df = pd.read_parquet(parquet_data)
+except ClientError as e:
+    print(f"Error leyendo el archivo desde MinIO: {e}")
+    exit(1)
+    
+# file_path = os.path.join(ACCESS_DATA, file_name)
+# df = pd.read_csv(file_path)  # Leer el fichero de datos
 
 cur.execute(create_fact_densidad_y_transportes)  # Crear la tabla
 conn.commit()
@@ -142,9 +183,18 @@ CREATE TABLE IF NOT EXISTS dim_usuario (
 """
 
 # Ejecución e importación de datos 
-file_name = 'dim_usuario.csv'
-file_path = os.path.join(ACCESS_DATA, file_name)
-df = pd.read_csv(file_path)  # Leer el fichero de datos
+key_input = 'dim_usuario.parquet'
+
+try:
+    response = s3.get_object(Bucket=bucket_input, Key=key_input)
+    parquet_data = BytesIO(response['Body'].read())
+    df = pd.read_parquet(parquet_data)
+except ClientError as e:
+    print(f"Error leyendo el archivo desde MinIO: {e}")
+    exit(1)
+    
+# file_path = os.path.join(ACCESS_DATA, file_name)
+# df = pd.read_csv(file_path)  # Leer el fichero de datos
 
 cur.execute(create_dim_usuario)  # Crear la tabla
 conn.commit()
@@ -177,9 +227,18 @@ CREATE TABLE IF NOT EXISTS dim_estacion (
 """
 
 # Ejecución e importación de datos 
-file_name = 'dim_estacion.csv'
-file_path = os.path.join(ACCESS_DATA, file_name)
-df = pd.read_csv(file_path)  # Leer el fichero de datos
+key_input= 'dim_estacion.parquet'
+try:
+    response = s3.get_object(Bucket=bucket_input, Key=key_input)
+    parquet_data = BytesIO(response['Body'].read())
+    df = pd.read_parquet(parquet_data)
+except ClientError as e:
+    print(f"Error leyendo el archivo desde MinIO: {e}")
+    exit(1)
+    
+# file_name = 'dim_estacion.csv'
+# file_path = os.path.join(ACCESS_DATA, file_name)
+# df = pd.read_csv(file_path)  # Leer el fichero de datos
 
 cur.execute(create_dim_estacion)  # Crear la tabla
 conn.commit()
@@ -209,9 +268,18 @@ CREATE TABLE IF NOT EXISTS dim_distrito (
 """
 
 # Ejecución e importación de datos 
-file_name = 'dim_distrito.csv'
-file_path = os.path.join(ACCESS_DATA, file_name)
-df = pd.read_csv(file_path)  # Leer el fichero de datos
+key_input= 'dim_distrito.parquet'
+
+try:
+    response = s3.get_object(Bucket=bucket_input, Key=key_input)
+    parquet_data = BytesIO(response['Body'].read())
+    df = pd.read_parquet(parquet_data)
+except ClientError as e:
+    print(f"Error leyendo el archivo desde MinIO: {e}")
+    exit(1)
+
+# file_path = os.path.join(ACCESS_DATA, file_name)
+# df = pd.read_csv(file_path)  # Leer el fichero de datos
 
 cur.execute(create_dim_distrito)  # Crear la tabla
 conn.commit()
@@ -241,9 +309,18 @@ CREATE TABLE IF NOT EXISTS dim_tiempo (
 """
 
 # Ejecución e importación de datos 
-file_name = 'dim_tiempo.csv'
-file_path = os.path.join(ACCESS_DATA, file_name)
-df = pd.read_csv(file_path)  # Leer el fichero de datos
+key_input = 'dim_tiempo.parquet'
+
+try:
+    response = s3.get_object(Bucket=bucket_input, Key=key_input)
+    parquet_data = BytesIO(response['Body'].read())
+    df = pd.read_parquet(parquet_data)
+except ClientError as e:
+    print(f"Error leyendo el archivo desde MinIO: {e}")
+    exit(1)
+
+# file_path = os.path.join(ACCESS_DATA, file_name)
+# df = pd.read_csv(file_path)  # Leer el fichero de datos
 
 cur.execute(create_dim_tiempo)  # Crear la tabla
 conn.commit()
@@ -280,9 +357,17 @@ CREATE TABLE IF NOT EXISTS dim_aparcamiento (
 """
 
 # Ejecución e importación de datos 
-file_name = 'dim_aparcamiento.csv'
-file_path = os.path.join(ACCESS_DATA, file_name)
-df = pd.read_csv(file_path)  # Leer el fichero de datos
+key_input = 'dim_aparcamiento.parquet'
+
+try:
+    response = s3.get_object(Bucket=bucket_input, Key=key_input)
+    parquet_data = BytesIO(response['Body'].read())
+    df = pd.read_parquet(parquet_data)
+except ClientError as e:
+    print(f"Error leyendo el archivo desde MinIO: {e}")
+    exit(1)
+# file_path = os.path.join(ACCESS_DATA, file_name)
+# df = pd.read_csv(file_path)  # Leer el fichero de datos
 
 cur.execute(create_dim_aparcamiento)  # Crear la tabla
 conn.commit()
