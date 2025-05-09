@@ -10,7 +10,7 @@ minio = boto3.client(
     aws_secret_access_key=os.environ.get("MINIO_SECRET_KEY", "minioadmin")    # Clave secreta
 )
 
-bucket = 'raw'  # Nombre del bucket que quieres crear
+bucket = 'raw'  
 
 # Intentar acceder al bucket, si no existe, lo creamos
 try:
